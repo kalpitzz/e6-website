@@ -1,0 +1,104 @@
+{{ if eq .Values.strategy "blueGreen" }}
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+{{- else }}
+apiVersion: apps/v1
+kind: Deployment
+{{- end }}
+metadata:
+  name: {{ template "name" . }}
+  labels:
+    app: e6data
+    type: controlplane
+    component: {{ template "name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: e6data
+      type: controlplane
+      component: {{ template "name" . }}
+  template:
+    metadata:
+      labels:
+        app: e6data
+        type: controlplane
+        component: {{ template "name" . }}
+
+    spec:
+      {{- if .Values.image.pullSecret.enabled }}
+      imagePullSecrets:
+        - name: {{ template "name" . }}-registry-auth
+      {{- end }}
+{{/*      serviceAccountName: {{ template "name" . }}*/}}
+      containers:
+          - name: {{ .Chart.Name }}
+            image: "{{ .Values.image.uri }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+        {{- if .Values.container_limit_range.enabled }}
+            resources:
+              requests:
+                memory: {{ .Values.container_limit_range.requests.memory }}
+                cpu: {{ .Values.container_limit_range.requests.cpu }}
+              limits:
+                memory: {{ .Values.container_limit_range.limits.memory }}
+                cpu: {{ .Values.container_limit_range.limits.cpu }}
+        {{- end }}
+            ports:
+            - name: http
+              containerPort: {{ .Values.containers.port }}
+              protocol: TCP
+{{/*            livenessProbe:*/}}
+{{/*              httpGet:*/}}
+{{/*                path: /liveness*/}}
+{{/*                port: {{ .Values.containers.port }}*/}}
+{{/*              initialDelaySeconds: 30*/}}
+{{/*              periodSeconds: 10*/}}
+{{/*              timeoutSeconds: 5*/}}
+{{/*              successThreshold: 1*/}}
+{{/*              failureThreshold: 3*/}}
+{{/*            readinessProbe:*/}}
+{{/*              httpGet:*/}}
+{{/*                path: /readiness*/}}
+{{/*                port: {{ .Values.containers.port }}*/}}
+{{/*              initialDelaySeconds: 30*/}}
+{{/*              periodSeconds: 10*/}}
+{{/*              timeoutSeconds: 5*/}}
+{{/*              successThreshold: 3*/}}
+{{/*              failureThreshold: 3*/}}
+            env:
+      {{- if .Values.database.enabled -}}
+        {{- range $key, $value := .Values.secretEnvs }}
+            - name: {{ $key }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "name" $ }}-auth
+                  key: {{ $key }}
+        {{- end }}
+      {{- end -}}
+        {{- range $key, $value := .Values.environmentVariables }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+        {{- end }}
+            - name: CANARY_ENABLED
+              value: {{ .Values.canary.enabled | quote}}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  {{ if eq .Values.strategy "blueGreen" }}
+  strategy:
+    blueGreen: 
+      activeService: {{ template "name" . }}
+      previewService: {{ template "name" . }}-preview
+      autoPromotionEnabled: false
+  {{ end }} 

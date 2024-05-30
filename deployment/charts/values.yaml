@@ -1,0 +1,119 @@
+# Default values for catalyst_orders.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+environment:
+  name: dev
+
+replicaCount: 1
+version: v1
+
+image:
+  #We passing All uri,repository,tag from --set variable 
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  pullPolicy: IfNotPresent
+  pullSecret:
+    enabled: false
+  name: dummy
+  uri: 123456789.dkr.us-east-1.amazonaws.com     
+
+service:
+  type: ClusterIP
+  port: 80
+  canary:
+    name: beta
+    enabled: false
+
+canary:
+  enabled: false
+  name: canary
+
+containers:
+  port: 80
+
+ingress:
+  enabled: false
+  annotations:
+    "nginx.ingress.kubernetes.io/ssl-redirect": "true"
+  ingressClassName: nginx
+  uriPrefix: /
+  hosts:
+    - host: "*.e6xlabs.com"
+      paths:
+        - path: /
+          # -- pathType (e.g. ImplementationSpecific, Prefix, .. etc.) might also be required by some Ingress Controllers
+          # pathType: Prefix
+          pathType: Prefix
+  tls:
+   - secretName: e6-dashboard-tls
+#     hosts:
+#       - e6-dashboard.e6xlabs.com
+
+
+egress:
+  enabled: false
+  hosts:
+    - e6-dashboard
+
+pod:
+  initialDelaySeconds: 15
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+tolerations: []
+
+affinity: {}
+
+environmentVariables: {}
+
+database: {}
+  #We passing All secrets from --set variable 
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # if need to set secretEnvs database: enabled: true.
+  #enabled: true 
+secretEnvs:
+  enabled: false
+  keyValues: {}
+  #We passing All secrets from --set variable 
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  
+
+destinationPolicy:
+  maxConnections: 6000
+  http1MaxPendingRequests: 1024
+  maxRequestsPerConnection: 10
+  consecutiveErrors: 7
+  interval: 1s
+  baseEjectionTime: 5m
+  maxEjectionPercent: 10
+
+jwt_policy:
+  enabled: false
+  mtls: true
+
+
+container_limit_range:
+  enabled: true
+  requests:
+    memory: "1Gi"
+    cpu: "800m"
+  limits:
+    memory: "1Gi"
+    cpu: "800m"
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+

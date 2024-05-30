@@ -1,0 +1,529 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --body-background: linear-gradient(
+    284deg,
+    rgba(247, 248, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 77%
+  );
+
+  --body-text-color: #16184b;
+  --text-color-1: #1e1e1e;
+  --text-color-2: #282828;
+  --text-color-3: #525252;
+  --text-color-4: #5f6980;
+  --text-color-5: #5f5f5f;
+  --text-color-6: #61717d;
+  --text-color-7: #a3a3a3;
+  --text-color-8: #2c2c2c;
+  /* new design pooja */
+  --text-color-9: #16184b;
+  --text-color-10: #7f87bd;
+  --text-color-11: #828282;
+
+  --primary-color: #ae3dff;
+  --secondary-color: #8800ff;
+  --desktop-navbar-height: 4.5rem;
+  --mobile-navbar-height: 2.5rem;
+  --swiper-navigation-color: #61717d;
+  --swiper-navigation-size: 30px;
+  --swiper-navigation-sides-offset: 20px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* for dark mode */
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-shadow-1 {
+    text-shadow: 0 13.36px 8.896px #c4c4c4, 0 -2px 1px #e7e7e7;
+  }
+  .text-shadow-2 {
+    text-shadow: 0 2px 1px #c4c4c4, 0 0px 1px #e7e7e7;
+  }
+}
+
+* {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: 16px;
+  color: var(--body-text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -ms-overflow-style: none;
+  background: var(--body-background);
+}
+
+body::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+div::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+button {
+  text-align: center;
+}
+
+.ellipsis {
+  display: inline-block; /* or block if you want it to behave like a block element */
+  white-space: nowrap; /* Prevents text from wrapping */
+  overflow: hidden; /* Hides overflowing text */
+  text-overflow: ellipsis; /* Displays ellipsis (...) for overflowing text */
+  max-width: 150px; /* Adjust this value based on your design */
+}
+
+.swiper-slide {
+  align-self: center;
+}
+
+.primary-label-1 {
+  font-size: 16px;
+  line-height: 22px;
+  padding: 0.5rem 1rem;
+  color: white;
+  background: linear-gradient(
+    164deg,
+    rgba(49, 17, 76, 1) 0%,
+    rgba(126, 72, 160, 1) 100%
+  );
+}
+
+/* Primary button 1*/
+
+.primary-btn-1 {
+  text-decoration: none;
+  min-width: max-content;
+  overflow: hidden;
+  cursor: pointer;
+  color: #fff;
+  background-color: #3f00a5;
+  border-radius: 9999px;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  max-height: 55px;
+}
+
+@keyframes animate {
+  0% {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
+}
+
+/* Primar btn 2 */
+
+.primary-btn-2 {
+  background-image: linear-gradient(
+    to right,
+    rgb(44, 6, 97) 0%,
+    #4b0471 51%,
+    #8b0bbd 100%
+  );
+  margin: 10px;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 0px;
+  display: block;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  max-height: 55px;
+  min-width: max-content;
+}
+
+.primary-btn-2:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.primary-btn-2:active {
+  transform: scale(0.95);
+}
+
+/* Primar btn 3 */
+.primary-btn-3 {
+  color: var(--text-color-2);
+  border: 1px solid #aaaaaa;
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 9999px;
+  min-width: max-content;
+  text-decoration: none;
+  overflow: hidden;
+  max-height: 55px;
+}
+
+/* card-carosoul */
+.carasoul-cards {
+  --swiper-navigation-size: 25px;
+  --swiper-navigation-color: black;
+}
+.carasoul-cards .swiper-slide {
+  background: transparent !important;
+  scale: 1;
+}
+.carasoul-cards .swiper-button-next {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -20%);
+  margin-right: 33%;
+  padding: 25px;
+  background-color: white;
+  border-radius: 9999px;
+  opacity: 0.6;
+}
+
+.carasoul-cards .swiper-button-next.swiper-button-disabled {
+  display: none;
+}
+
+.carasoul-cards .swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -20%);
+  margin-left: -3%;
+  padding: 25px;
+  background-color: white;
+  border-radius: 9999px;
+  opacity: 0.6;
+}
+.carasoul-cards .swiper-button-prev.swiper-button-disabled {
+  display: none;
+}
+
+/* coverflow slider */
+
+.coverflow-slide-v1 {
+  --swiper-navigation-sides-offset: 100px;
+  --swiper-navigation-color: white;
+}
+.coverflow-slide-v1 .swiper-slide-shadow-coverflow {
+  background-image: none !important;
+}
+.coverflow-slide-v1 .swiper-button-next {
+  padding: 25px;
+  background-color: black;
+  border-radius: 9999px;
+  opacity: 0.8;
+}
+
+.coverflow-slide-v1 .swiper-button-next.swiper-button-disabled {
+  display: none;
+}
+
+.coverflow-slide-v1 .swiper-button-prev {
+  padding: 25px;
+  background-color: black;
+  border-radius: 9999px;
+  opacity: 0.8;
+}
+.coverflow-slide-v1 .swiper-button-prev.swiper-button-disabled {
+  display: none;
+}
+
+/* ----------------------------------------------------------------------------------------------- */
+
+/* Mobile   */
+@media only screen and (max-width: 767px) {
+  /* done */
+  h1 {
+    font-size: 20px;
+    letter-spacing: -1px;
+  }
+  /* done */
+  h2 {
+    font-size: 18px;
+    letter-spacing: -0.8px;
+  }
+  h3 {
+    font-size: 17px;
+    letter-spacing: -1px;
+  }
+  h4 {
+    font-size: 16px;
+  }
+  /* done */
+  h5 {
+    font-size: 14px;
+  }
+  /* done */
+  h6 {
+    font-size: 13px;
+  }
+  span {
+    font-size: 12px;
+  }
+  p {
+    font-size: 12px;
+  }
+  a {
+    font-size: 12px;
+  }
+  button {
+    font-size: 12px;
+  }
+  .primary-label-1 {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .carasoul-cards .swiper-button-next {
+    margin-right: -10%;
+    opacity: 0.9;
+  }
+  .carasoul-cards .swiper-button-prev {
+    margin-left: -11%;
+    opacity: 0.9;
+  }
+}
+
+/* Tablet  */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  /* done */
+  h1 {
+    font-size: 40px;
+    letter-spacing: -1.5px;
+  }
+  /* done */
+  h2 {
+    font-size: 40px;
+    letter-spacing: -0.8px;
+  }
+  /* done */
+  h3 {
+    font-size: 22px;
+    letter-spacing: -1px;
+  }
+  h4 {
+    font-size: 20px;
+  }
+  /* done */
+  h5 {
+    font-size: 18px;
+  }
+  /* done */
+  h6 {
+    font-size: 18px;
+  }
+  /* done */
+  span {
+    font-size: 15px;
+  }
+  /* done */
+  p {
+    font-size: 15px;
+  }
+  a {
+    font-size: 12px;
+  }
+  button {
+    font-size: 12px;
+  }
+  .primary-label-1 {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .carasoul-cards .swiper-button-next {
+    margin-right: 29%;
+    opacity: 0.9;
+  }
+  .carasoul-cards .swiper-button-prev {
+    margin-left: -6%;
+    opacity: 0.9;
+  }
+}
+
+/* small desktops */
+@media only screen and (min-width: 1024px) and (max-width: 1279px) {
+  h1 {
+    /* done */
+    font-size: 50px;
+    letter-spacing: -2.5px;
+    line-height: 65px;
+  }
+  h2 {
+    font-size: 40px;
+    letter-spacing: -2px;
+  }
+  h3 {
+    font-size: 20px;
+    letter-spacing: -1px;
+  }
+  h4 {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+  h5 {
+    font-size: 18px;
+  }
+  h6 {
+    /* done */
+    font-size: 16px;
+  }
+  span {
+    font-size: 14px;
+  }
+  p {
+    font-size: 12px;
+  }
+  a {
+    font-size: 10px;
+  }
+  button {
+    font-size: 12px;
+  }
+  .primary-label-1 {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .carasoul-cards .swiper-button-next {
+    margin-right: 31%;
+    opacity: 0.9;
+  }
+  .carasoul-cards .swiper-button-prev {
+    margin-left: -4%;
+    opacity: 0.9;
+  }
+}
+
+/* medium Desktop / Laptop - screens between 1280px and 1919px */
+/* done */
+@media only screen and (min-width: 1280px) {
+  /* Your CSS rules for desktops or laptops */
+
+  h1 {
+    font-size: 55px;
+    letter-spacing: -1px;
+    line-height: 70px;
+  }
+  h2 {
+    font-size: 40px;
+    line-height: 50px;
+  }
+  h3 {
+    /* changed */
+    font-size: 24px;
+  }
+  h4 {
+    /* changed */
+    font-size: 22px;
+  }
+  h5 {
+    /* changed */
+    font-size: 20px;
+  }
+  h6 {
+    /* changed */
+    font-size: 18px;
+  }
+
+  span {
+    font-size: 16px;
+  }
+  p {
+    /* changed */
+    font-size: 16px;
+  }
+  a {
+    font-size: 14px;
+  }
+  button {
+    font-size: 14px;
+  }
+  .primary-label-1 {
+    font-size: 16px;
+    line-height: 22px;
+  }
+  .carasoul-cards .swiper-button-next {
+    margin-right: 32%;
+    opacity: 0.9;
+  }
+  .carasoul-cards .swiper-button-prev {
+    margin-left: -3%;
+    opacity: 0.9;
+  }
+}
+
+/* Large desktops - screens 1920px width and above */
+@media only screen and (min-width: 1920px) {
+  /* Your CSS rules for large desktops */
+
+  h1 {
+    font-size: 75px;
+    letter-spacing: -0.5px;
+    line-height: 100px;
+  }
+  h2 {
+    font-size: 50px;
+    line-height: 70px;
+  }
+  h3 {
+    /* changed */
+    font-size: 30px;
+  }
+  h4 {
+    /* changed */
+    font-size: 24px;
+  }
+  h5 {
+    /* changed */
+    font-size: 22px;
+  }
+  h6 {
+    /* changed */
+    font-size: 20px;
+  }
+
+  span {
+    font-size: 18px;
+  }
+  p {
+    /* changed */
+    font-size: 16px;
+  }
+  a {
+    font-size: 14px;
+  }
+  button {
+    font-size: 16px;
+  }
+  .primary-label-1 {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
